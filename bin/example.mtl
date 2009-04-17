@@ -1,0 +1,55 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  2.1.12.1218
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+
+newmtl face_1
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 1
+Ns 64
+map_Kd texture.jpg
+
+newmtl face_2
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 2
+Ns 64
+map_Kd texture.jpg
+
+newmtl face_3
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 3
+Ns 64
+map_Kd texture.jpg
+
+newmtl face_4
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 4
+Ns 64
+map_Kd texture.jpg
+
+newmtl face_5
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 5
+Ns 64
+map_Kd texture.jpg
+
+newmtl face_6
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.384296 0.194061 0.174387
+illum 6
+Ns 64
+map_Kd texture.jpg
