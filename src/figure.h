@@ -18,7 +18,8 @@ private:
 	
 	coord_t		m_size;
 	char			m_filler;
-	char			m_data[MAX_FIGURE_SIZE][MAX_FIGURE_SIZE][MAX_FIGURE_SIZE];
+	
+	DEF_CUBE( m_data, MAX_FIGURE_SIZE);
 	
 	mutable figure_t* m_rotated_figures[axis_numof][angle_numof];
 	

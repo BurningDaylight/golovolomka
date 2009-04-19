@@ -55,16 +55,28 @@ const char EMPTY = '.';
 
 typedef int coord_value_t;
 
-#define COORD_VALUE_POS_INF  1000
-#define COORD_VALUE_NEG_INF	-1000
-
-
 struct coord_t
 {
 	coord_value_t x, y, z;
 	coord_t() : x(0), y(0), z(0) {}
 	coord_t(coord_value_t _x, coord_value_t _y, coord_value_t _z) : x(_x), y(_y), z(_z) {}
+
+	void set_min(const coord_t& rh)	{	x = MIN(rh.x, x);	y = MIN(rh.y, y);	z = MIN(rh.z, z);	}
+	void set_max(const coord_t& rh)	{	x = MAX(rh.x, x);	y = MAX(rh.y, y);	z = MAX(rh.z, z);	}
+	void add(const coord_t& rh)	{	x += rh.x; y += rh.y; z += rh.z; }
+	void sub(const coord_t& rh)	{	x -= rh.x; y -= rh.y; z -= rh.z; }
+	void add_scalar(int v)	{	x += v; y += v; z += v; }
 };
+
+const coord_t COORD_INF_NEG = coord_t(-1000, -1000, -1000);
+const coord_t COORD_INF_POS = coord_t( 1000,  1000,  1000);
+
+#define DEF_CUBE(name, max_size) char name[(max_size)][(max_size)][(max_size)];
+
+#define FOR_ALL_CUBE(x,y,z,size)	for(int z=0; z<(size).z; z++)				\
+																		for(int y=0; y<(size).y; y++)			\
+																			for(int x=0; x<(size).x; x++)		\
+
 
 struct point_group_t {
 	int				quantity;

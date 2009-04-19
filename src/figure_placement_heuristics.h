@@ -11,8 +11,7 @@ struct figure_placement_heuristics_t
 private:
 	const figure_t&	field;
 	
-	int solid_lines[MAX_FIGURE_SIZE][MAX_FIGURE_SIZE][MAX_FIGURE_SIZE];
-	
+	DEF_CUBE( solid_lines, MAX_FIGURE_SIZE);
 
 public:
 
