@@ -1,5 +1,6 @@
 *.exe
 *.ilk
+/bin/*.obj
 
 *.idb
 *.pdb
@@ -10,6 +11,7 @@
 /project/win32/Debug
 /project/win32/Release
 /project/win32/VTune
+/project/win32/*.obj
 
 /tools
 
