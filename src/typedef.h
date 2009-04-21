@@ -66,16 +66,26 @@ struct coord_t
 	void add(const coord_t& rh)	{	x += rh.x; y += rh.y; z += rh.z; }
 	void sub(const coord_t& rh)	{	x -= rh.x; y -= rh.y; z -= rh.z; }
 	void add_scalar(int v)	{	x += v; y += v; z += v; }
+	
+	bool any_coord_is_less(const coord_t& rh) const			{	return x<rh.x || y<rh.y || z<rh.z; }
+	bool each_coord_is_less(const coord_t& rh) const		{	return x<rh.x && y<rh.y && z<rh.z; }
+	bool any_coord_is_greater(const coord_t& rh) const  {	return x>rh.x || y>rh.y || z>rh.z; }
+	bool each_coord_is_greater(const coord_t& rh) const {	return x>rh.x && y>rh.y && z>rh.z; }
+	bool any_coord_is_greater_equal(const coord_t& rh) const  {	return x>=rh.x || y>=rh.y || z>=rh.z; }
+	bool each_coord_is_greater_equal(const coord_t& rh) const {	return x>=rh.x && y>=rh.y && z>=rh.z; }
 };
 
 const coord_t COORD_INF_NEG = coord_t(-1000, -1000, -1000);
 const coord_t COORD_INF_POS = coord_t( 1000,  1000,  1000);
 
-#define DEF_CUBE(name, max_size) char name[(max_size)][(max_size)][(max_size)];
+#define DEF_CUBE(name, max_size)	char name[(max_size)][(max_size)][(max_size)];
 
-#define FOR_ALL_CUBE(x,y,z,size)	for(int z=0; z<(size).z; z++)				\
-																		for(int y=0; y<(size).y; y++)			\
-																			for(int x=0; x<(size).x; x++)		\
+#define CUBE_ELEM(name, p)				(name)[(p).x][(p).y][(p).z]
+
+#define FOR_EACH_CUBE_ELEM(p,size)	coord_t p;																\
+																		for((p).z=0; (p).z<(size).z; (p).z++)			\
+																			for((p).y=0; (p).y<(size).y; (p).y++)		\
+																				for((p).x=0; (p).x<(size).x; (p).x++)	
 
 
 struct point_group_t {

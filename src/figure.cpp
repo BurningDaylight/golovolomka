@@ -92,8 +92,9 @@ figure_t::figure_t(const char filler, const coord_t size, const char* data)
 	memset(m_rotated_figures, 0, sizeof(m_rotated_figures)); 
 	memset(m_data, 0, sizeof(m_data));
 	
-	FOR_ALL_CUBE(x,y,z,size)
-		m_data[x][y][z] =	(data[x + (y + z * size.y) * size.x] == SOLID) ? m_filler : 0; 
+	FOR_EACH_CUBE_ELEM(p,size)
+		CUBE_ELEM(m_data,p) = 
+								(data[p.x + (p.y + p.z * size.y) * size.x] == SOLID) ? m_filler : 0; 
 }
 
 
@@ -104,8 +105,7 @@ figure_t::figure_t(const char filler, const coord_t size, const coord_t *coords,
 	memset(m_rotated_figures, 0, sizeof(m_rotated_figures)); 
 	memset(m_data, 0, sizeof(m_data));
 	
-	for(int i = 0; i<q; i++)
-		m_data[coords[i].x][coords[i].y][coords[i].z] = m_filler;
+	for(int i = 0; i<q; i++) CUBE_ELEM(m_data,coords[i]) = m_filler;
 }
 
 
@@ -147,18 +147,20 @@ bool figure_t::try_place_figure(const figure_t& figure, const coord_t point)
 {
 	coord_t size = figure.get_size();
 	
-	if(
-		 point.x < 0 || m_size.x < point.x + size.x ||
-		 point.y < 0 || m_size.y < point.y + size.y ||
-		 point.z < 0 || m_size.z < point.z + size.z			)
-		return false;
-
-	FOR_ALL_CUBE(x,y,z,size)	
-		if (figure.m_data[x][y][z]!=0 && m_data[x+point.x][y+point.y][z+point.z] != 0)
+	FOR_EACH_CUBE_ELEM(p1,size)	
+	{
+		coord_t p_plus_offs(p1);
+		p_plus_offs.add(point);
+		if (CUBE_ELEM(figure.m_data,p1) != 0 && CUBE_ELEM(m_data,p_plus_offs) != 0)
 			return false;
+	}
 				
-	FOR_ALL_CUBE(x,y,z,size)	
-		m_data[x+point.x][y+point.y][z+point.z] += figure.m_data[x][y][z];
+	FOR_EACH_CUBE_ELEM(p,size)	
+	{
+		coord_t p_plus_offs(p);
+		p_plus_offs.add(point);
+		CUBE_ELEM(m_data,p_plus_offs) += CUBE_ELEM(figure.m_data,p);
+	}
 				
 	m_filler = MAX(m_filler, figure.get_filler());
 				
@@ -169,15 +171,18 @@ bool figure_t::try_place_figure(const figure_t& figure, const coord_t point)
 bool figure_t::remove_figure(const figure_t& figure, const coord_t point)
 {
 	coord_t size = figure.get_size();
+	coord_t zero_coord, max_coord(point);
+	max_coord.add(size);
 	
-	if(
-		 point.x < 0 || m_size.x < point.x + size.x ||
-		 point.y < 0 || m_size.y < point.y + size.y ||
-		 point.z < 0 || m_size.z < point.z + size.z			)
+	if(	point.any_coord_is_less(zero_coord) || m_size.any_coord_is_less(max_coord) )
 		return false;
 	
-	FOR_ALL_CUBE(x,y,z,size)	
-		m_data[x+point.x][y+point.y][z+point.z] -= figure.m_data[x][y][z];
+	FOR_EACH_CUBE_ELEM(p,size)	
+	{
+		coord_t p_plus_offs(p);
+		p_plus_offs.add(point);
+		CUBE_ELEM(m_data,p_plus_offs) -= CUBE_ELEM(figure.m_data,p);
+	}
 				
 	return true;
 }
@@ -187,15 +192,16 @@ void figure_t::print(const char* caption) const
 {
   printf("%s\n", caption);
  
-	for(int z=0; z<m_size.z; z++)
-		for(int y=0; y<m_size.y; y++)
+	coord_t p;
+	for(p.z=0; p.z<m_size.z; p.z++)
+		for(p.y=0; p.y<m_size.y; p.y++)
 		{
-			for(int m=0; m<z*m_size.x; m++) printf(" ");
-			for(int x=0; x<m_size.x; x++) 
+			for(int m=0; m<p.z*m_size.x; m++) printf(" ");
+			for(p.x=0; p.x<m_size.x; p.x++) 
 				#ifdef USE_UNIFICATED_BLOCK_PRINT
-					printf("%c", (m_data[x][y][z] !=0 ? SOLID : EMPTY));
+					printf("%c", (CUBE_ELEM(m_data,p) !=0 ? SOLID : EMPTY));
 				#else
-					printf("%c", '0' + m_data[x][y][z]);
+					printf("%c", '0' + CUBE_ELEM(m_data,p));
 				#endif
 			printf("\n");
 		}
@@ -210,17 +216,18 @@ void figure_t::sprint(char* s, const char* caption, const char* string_start) co
 		sprintf(s+strlen(s), "%s", string_start);
   sprintf(s+strlen(s), "%s\n", caption);
  
-	for(int z=0; z<m_size.z; z++)
-		for(int y=0; y<m_size.y; y++)
+	coord_t p;
+	for(p.z=0; p.z<m_size.z; p.z++)
+		for(p.y=0; p.y<m_size.y; p.y++)
 		{
 			if(string_start)
 				sprintf(s+strlen(s), "%s", string_start);
-			for(int m=0; m<z*m_size.x; m++) sprintf(s+strlen(s), " ");
-			for(int x=0; x<m_size.x; x++) 
+			for(int m=0; m<p.z*m_size.x; m++) sprintf(s+strlen(s), " ");
+			for(p.x=0; p.x<m_size.x; p.x++) 
 				#ifdef USE_UNIFICATED_BLOCK_PRINT
-					sprintf(s+strlen(s), "%c", (m_data[x][y][z] !=0 ? SOLID : EMPTY));
+					sprintf(s+strlen(s), "%c", (CUBE_ELEM(m_data,p) !=0 ? SOLID : EMPTY));
 				#else
-					sprintf(s+strlen(s), "%c", '0' + m_data[x][y][z]);
+					sprintf(s+strlen(s), "%c", '0' + CUBE_ELEM(m_data,p));
 				#endif
 			sprintf(s+strlen(s), "\n");
 		}
@@ -240,24 +247,25 @@ int figure_t::get_movable_subfigure_index(direction_t& out_direction) const
 	
 	can_move_t* can_move = dnew can_move_t[m_filler+1];
 	memset(can_move, 1, sizeof(can_move_t) * m_filler);	// set all to true
+	
+	coord_t zero_coord;
 
-	FOR_ALL_CUBE(x,y,z,m_size)	
+	FOR_EACH_CUBE_ELEM(p,m_size)	
 	{
-		char v = m_data[x][y][z];
+		char v = CUBE_ELEM(m_data,p);
 		if(v > 0)
 			FOR_ALL_ENUM(direction)
 			{
 				coord_t c = direction2delta(direction); 
-				c.x += x; c.y += y; c.z += z;
+				c.add(p);
 				
 				encountered[v] = true;
 				
-				if( can_move[v][direction] &&
-						c.x >= 0 && c.x < m_size.x && 
-						c.y >= 0 && c.y < m_size.y &&
-						c.z >= 0 && c.z < m_size.z		)
+				if( can_move[v][direction] && 
+						c.each_coord_is_greater_equal(zero_coord) &&
+						c.each_coord_is_less(m_size)									)
 				{
-					char v1 = m_data[c.x][c.y][c.z];
+					char v1 = CUBE_ELEM(m_data,c);
 					can_move[v][direction] &=  v1 == 0 || v1 == v;
 				}
 			}
@@ -283,11 +291,8 @@ bool figure_t::has_solid_line(const coord_t& start, axis_t axis) const
 {
 	coord_t d = direction2delta(axis2direction(axis, false));
 	
-	for(	coord_t curr(start);
-				curr.x < m_size.x && curr.y < m_size.y && curr.z < m_size.z;
-				curr.x += d.x, curr.y += d.y, curr.z += d.z
-			)
-		if( m_data[curr.x][curr.y][curr.z] == 0)
+	for(	coord_t curr(start); curr.each_coord_is_less(m_size); curr.add(d) )
+		if( CUBE_ELEM(m_data,curr) == 0)
 			return false;
 			
 	return true;
@@ -297,8 +302,9 @@ coord_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
 {
 	q = 0;
 	
-	FOR_ALL_CUBE(x,y,z,m_size)	
-		if(	filler>0 && m_data[x][y][z] == filler || filler == 0 && m_data[x][y][z] !=0 )
+	FOR_EACH_CUBE_ELEM(p1,m_size)	
+		if(	filler > 0  && CUBE_ELEM(m_data,p1) == filler || 
+				filler == 0 && CUBE_ELEM(m_data,p1) !=0						)
 			q++;
 					
 	if(q==0)
@@ -307,9 +313,10 @@ coord_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
 	coord_t* vertices = dnew coord_t[q];
 			
 	int count = 0;
-	FOR_ALL_CUBE(x,y,z,m_size)	
-		if(	filler>0 && m_data[x][y][z] == filler || filler == 0 && m_data[x][y][z] !=0 )
-			vertices[count++] = coord_t(x, y, z);
+	FOR_EACH_CUBE_ELEM(p,m_size)	
+		if(	filler > 0  && CUBE_ELEM(m_data,p) == filler || 
+				filler == 0 && CUBE_ELEM(m_data,p) !=0						)
+			vertices[count++] = p;
 			
 	return vertices;
 }

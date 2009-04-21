@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
 		
 		const int quantity_of_figures_to_use	= q;
 		const int num_of_figures_to_place			= q;
-		const int index_of_decision						= 1000000;
+		const int index_of_decision						= 1;
 		
 		figure_packer_observer_t figure_packer_observer(field);
 		
