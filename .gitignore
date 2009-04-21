@@ -11,10 +11,7 @@
 /project/win32/Release
 /project/win32/VTune
 
-/tools/Direct3D/MeshFromOBJ/Debug
-/tools/Direct3D/MeshFromOBJ/Release
-/tools/Direct3D/MeshFromOBJ/VTune
-
+/tools
 
 *~
 .*~
