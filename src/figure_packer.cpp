@@ -11,6 +11,13 @@
 #include "figure_packer_observer.h"
 
 
+#define ENUMERATE(value, type, enum)  (enum).start_enumeration();							\
+																			while(!(enum).enumeration_is_ended())		\
+																			{																				\
+																				type value = (enum).next();						
+#define END_OF_ENUMERATION }
+
+
 figure_packer_t::figure_packer_t(	
 				figure_t&																				field_, 
 				const figure_rotator_t*													figures_,
@@ -55,10 +62,8 @@ bool figure_packer_t::place_next_figure(
 	int processed_figures = 0;
 
 	//Open figure_set node
-	figure_set_enum.start_enumeration();
-	while(!figure_set_enum.enumeration_is_ended())
+	ENUMERATE(placed_figure_index, int, figure_set_enum)
 	{
-		int placed_figure_index = figure_set_enum.next();
 		ensure("placed_figure_index must be >= 0", placed_figure_index >= 0);
 		
 		figure_set_enumerator_t next_figure_set_enum(
@@ -73,15 +78,13 @@ bool figure_packer_t::place_next_figure(
 																											figures[placed_figure_index],
 																											transformation_enum_strategy
 																										);
-		transformation_enum.start_enumeration();
-		while(!transformation_enum.enumeration_is_ended())
-		{
-			transformed_figure_t transformed_figure = transformation_enum.next();
-			
-			observer.on_attempt_to_place_figure();
+		ENUMERATE(transformed_figure, transformed_figure_t, transformation_enum)
+		{	
+			//Run heuristics on figure placement
 			if(figure_placement_heuristics.can_place_figure(
 							transformed_figure.figure, transformed_figure.position))
 			{
+				observer.on_attempt_to_place_figure();
 				if(field.try_place_figure(
 							transformed_figure.figure, transformed_figure.position))
 				{
@@ -121,9 +124,9 @@ bool figure_packer_t::place_next_figure(
 					field.remove_figure(transformed_figure.figure, transformed_figure.position);
 				}
 			}
-		}
+		} END_OF_ENUMERATION
 		processed_figures++;
-	}
+	} END_OF_ENUMERATION
 				
 	ensure(
 		"Invalid number of processed figures!",
