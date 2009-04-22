@@ -52,7 +52,6 @@ public:
 
 	int get_movable_subfigure_index(direction_t& direction) const;
 
-	void print(const char* caption) const;
 	void sprint(char* s, const char* caption, const char* string_start) const;
 };
 

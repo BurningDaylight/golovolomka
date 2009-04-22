@@ -188,26 +188,6 @@ bool figure_t::remove_figure(const figure_t& figure, const coord_t point)
 }
 
 
-void figure_t::print(const char* caption) const
-{
-  printf("%s\n", caption);
- 
-	coord_t p;
-	for(p.z=0; p.z<m_size.z; p.z++)
-		for(p.y=0; p.y<m_size.y; p.y++)
-		{
-			for(int m=0; m<p.z*m_size.x; m++) printf(" ");
-			for(p.x=0; p.x<m_size.x; p.x++) 
-				#ifdef USE_UNIFICATED_BLOCK_PRINT
-					printf("%c", (CUBE_ELEM(m_data,p) !=0 ? SOLID : EMPTY));
-				#else
-					printf("%c", '0' + CUBE_ELEM(m_data,p));
-				#endif
-			printf("\n");
-		}
-}
-
-
 void figure_t::sprint(char* s, const char* caption, const char* string_start) const
 {
 	s[0] = 0;
