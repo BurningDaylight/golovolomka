@@ -41,6 +41,8 @@ const unsigned int BIG_BUFFER = 100000;
 #endif											
 
  
+#define error(M) { printf("Error: %s", (M)); throw 0; }
+
 #ifdef _DEBUG
 	#define ensure(M,V) { if(!(V)) { printf("Error: %s", (M)); throw 0; } }
 #else
@@ -64,6 +66,7 @@ enum angle_t
 	angle_numof
 };
 
-
+#define error_call_of_pure_virtual_method(CN) \
+							{ error(#CN ": Call of base class pure virtual method"); }
 
 #endif // TYPEDEF_H_INCLUDED
