@@ -27,8 +27,8 @@ public:
 	{
 		direction_t direction;
 		angle_t			angle;
-		coord_t			position;
-		figure_transformation_operator_t(	direction_t direction_, angle_t angle_, coord_t position_) :
+		coord3D_t			position;
+		figure_transformation_operator_t(	direction_t direction_, angle_t angle_, coord3D_t position_) :
 			direction(direction_),	angle(angle_), position(position_)
 		{}
 	};

@@ -4,14 +4,14 @@
 
 static const int num_points_per_face = 2;
 
-static const coord_t points[direction_numof][num_points_per_face] = 
+static const coord3D_t points[direction_numof][num_points_per_face] = 
 {
-	{coord_t(0, 1, 2), coord_t(0, 3, 2)	}, // x
-	{coord_t(0, 1, 2), coord_t(0, 3, 2)	}, // x inv 
-	{coord_t(2, 0, 1), coord_t(2, 0, 3)	}, // y
-	{coord_t(2, 0, 1), coord_t(2, 0, 3)	}, // y inv
-	{coord_t(1, 2, 0), coord_t(3, 2, 0)	}, // z
-	{coord_t(1, 2, 0), coord_t(3, 2, 0)	}  // z inv
+	{coord3D_t(0, 1, 2), coord3D_t(0, 3, 2)	}, // x
+	{coord3D_t(0, 1, 2), coord3D_t(0, 3, 2)	}, // x inv 
+	{coord3D_t(2, 0, 1), coord3D_t(2, 0, 3)	}, // y
+	{coord3D_t(2, 0, 1), coord3D_t(2, 0, 3)	}, // y inv
+	{coord3D_t(1, 2, 0), coord3D_t(3, 2, 0)	}, // z
+	{coord3D_t(1, 2, 0), coord3D_t(3, 2, 0)	}  // z inv
 };
 
 

@@ -9,10 +9,10 @@ figure_placement_heuristics_t::figure_placement_heuristics_t(const figure_t& fie
 }
 
 bool figure_placement_heuristics_t::can_place_figure(
-													const figure_t& figure, const coord_t ins_pos) const
+													const figure_t& figure, const coord3D_t ins_pos) const
 {
-	//coord_t field_size = field.get_size();
-	//coord_t figure_size = figure.get_size();
+	//coord3D_t field_size = field.get_size();
+	//coord3D_t figure_size = figure.get_size();
 
 	//if(ins_pos.x <= 0 && figure_size.x + ins_pos.x >= field_size.x)
 	//{
@@ -23,7 +23,7 @@ bool figure_placement_heuristics_t::can_place_figure(
 	//	for (coord_value_t y=0; y<max_y; y++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
 	//			if (	solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] && 
-	//						figure.has_solid_line(coord_t(x,y,z),axis_x) )
+	//						figure.has_solid_line(coord3D_t(x,y,z),axis_x) )
 	//				return false;
 	//}
 	//
@@ -36,7 +36,7 @@ bool figure_placement_heuristics_t::can_place_figure(
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
 	//			if (	solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] && 
-	//						figure.has_solid_line(coord_t(x,y,z),axis_x) )
+	//						figure.has_solid_line(coord3D_t(x,y,z),axis_x) )
 	//				return false;
 	//}
 	//
@@ -49,7 +49,7 @@ bool figure_placement_heuristics_t::can_place_figure(
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t y=0; y<max_y; y++ )
 	//			if (	solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] && 
-	//						figure.has_solid_line(coord_t(x,y,z),axis_x) )
+	//						figure.has_solid_line(coord3D_t(x,y,z),axis_x) )
 	//				return false;
 	//}
 	//
@@ -58,10 +58,10 @@ bool figure_placement_heuristics_t::can_place_figure(
 }
 
 void figure_placement_heuristics_t::on_figure_placement(
-															const figure_t& figure, const coord_t ins_pos)
+															const figure_t& figure, const coord3D_t ins_pos)
 {
-	//coord_t field_size = field.get_size();
-	//coord_t figure_size = figure.get_size();
+	//coord3D_t field_size = field.get_size();
+	//coord3D_t figure_size = figure.get_size();
 
 	//if(ins_pos.x <= 0 && figure_size.x + ins_pos.x >= field_size.x)
 	//{
@@ -71,7 +71,7 @@ void figure_placement_heuristics_t::on_figure_placement(
 	//	coord_value_t x = 0;
 	//	for (coord_value_t y=0; y<max_y; y++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}
@@ -84,7 +84,7 @@ void figure_placement_heuristics_t::on_figure_placement(
 	//	coord_value_t y = 0;
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}
@@ -97,7 +97,7 @@ void figure_placement_heuristics_t::on_figure_placement(
 	//	coord_value_t z = 0;
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t y=0; y<max_y; y++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}
@@ -105,10 +105,10 @@ void figure_placement_heuristics_t::on_figure_placement(
 
 
 void figure_placement_heuristics_t::on_figure_removal(
-															const figure_t& figure, const coord_t ins_pos)
+															const figure_t& figure, const coord3D_t ins_pos)
 {
-	//coord_t field_size = field.get_size();
-	//coord_t figure_size = figure.get_size();
+	//coord3D_t field_size = field.get_size();
+	//coord3D_t figure_size = figure.get_size();
 
 	//if(ins_pos.x <= 0 && figure_size.x + ins_pos.x >= field_size.x)
 	//{
@@ -118,7 +118,7 @@ void figure_placement_heuristics_t::on_figure_removal(
 	//	coord_value_t x = 0;
 	//	for (coord_value_t y=0; y<max_y; y++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}
@@ -131,7 +131,7 @@ void figure_placement_heuristics_t::on_figure_removal(
 	//	coord_value_t y = 0;
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t z=0; z<max_z; z++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}
@@ -144,7 +144,7 @@ void figure_placement_heuristics_t::on_figure_removal(
 	//	coord_value_t z = 0;
 	//	for (coord_value_t x=0; x<max_x; x++ )
 	//		for (coord_value_t y=0; y<max_y; y++ )
-	//			if (figure.has_solid_line(coord_t(x,y,z),axis_x))
+	//			if (figure.has_solid_line(coord3D_t(x,y,z),axis_x))
 	//				solid_lines[ins_pos.x + x][ins_pos.y + y][ins_pos.z + z] ^= 
 	//																													1 << figure.get_filler();
 	//}

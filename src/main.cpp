@@ -42,7 +42,7 @@ const unsigned int FIELD_Z = 6;
 
 
 #define DEFINE_FIGURE(number, s) figure_rotator_t figure_##number( \
-																		figure_t((number), coord_t(6, 2, 2), (s)));
+																		figure_t((number), coord3D_t(6, 2, 2), (s)));
 
 //--------------------------- initial figures ---------------------------------
 
@@ -106,8 +106,8 @@ figure_rotator_t original_figures[QUANTITY_OF_ORIGINAL_FIGURES] =
 const unsigned int QUANTITY_OF_DUMMY_FIGURES = 2;
 figure_rotator_t dummy_figures[QUANTITY_OF_DUMMY_FIGURES] = 
 {
-	figure_rotator_t(figure_t( 1, coord_t(1, 1, 1), "#")),
-	figure_rotator_t(figure_t( 2, coord_t(1, 1, 1), "#")),
+	figure_rotator_t(figure_t( 1, coord3D_t(1, 1, 1), "#")),
+	figure_rotator_t(figure_t( 2, coord3D_t(1, 1, 1), "#")),
 };
 
 //------------------------------------------------------------
@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
 #endif	
 
 		//Field
-		figure_t field(coord_t(FIELD_X, FIELD_Y, FIELD_Z));
+		figure_t field(coord3D_t(FIELD_X, FIELD_Y, FIELD_Z));
 		
 		const int quantity_of_figures_to_use	= q;
 		const int num_of_figures_to_place			= q;

@@ -19,7 +19,7 @@ void rotate2D_hacked(coord_value_t& x, coord_value_t& y, coord_value_t cos_a, co
 }
 
 
-void rotate_around_axis(coord_t* coords, int q, axis_t axis, angle_t angle)
+void rotate_around_axis(coord3D_t* coords, int q, axis_t axis, angle_t angle)
 {
 	static const coord_value_t coss[angle_numof] = 
 	{
@@ -60,10 +60,10 @@ void rotate_around_axis(coord_t* coords, int q, axis_t axis, angle_t angle)
 }
 
 
-coord_t determine_size_and_adjust_coords_to_positive_values(coord_t* coords, int q)
+coord3D_t determine_size_and_adjust_coords_to_positive_values(coord3D_t* coords, int q)
 {
-	coord_t min_coords = coord_t::get_inf_pos();
-	coord_t max_coords = coord_t::get_inf_neg();
+	coord3D_t min_coords = coord3D_t::get_inf_pos();
+	coord3D_t max_coords = coord3D_t::get_inf_neg();
 
 	for(int i = 0; i<q; i++)
 	{
@@ -87,7 +87,7 @@ coord_t determine_size_and_adjust_coords_to_positive_values(coord_t* coords, int
 
 const figure_t figure_t::m_null_figure;
 
-figure_t::figure_t(const char filler, const coord_t size, const char* data)
+figure_t::figure_t(const char filler, const coord3D_t size, const char* data)
 {
 	m_filler = filler;
 	m_size = size;
@@ -100,7 +100,7 @@ figure_t::figure_t(const char filler, const coord_t size, const char* data)
 }
 
 
-figure_t::figure_t(const char filler, const coord_t size, const coord_t *coords, int q)
+figure_t::figure_t(const char filler, const coord3D_t size, const coord3D_t *coords, int q)
 {
 	m_filler = filler;
 	m_size = size;
@@ -118,7 +118,7 @@ figure_t::figure_t() : m_size(0,0,0), m_filler(0)
 }
 
 
-figure_t::figure_t(const coord_t size) : m_size(size), m_filler(0) 
+figure_t::figure_t(const coord3D_t size) : m_size(size), m_filler(0) 
 { 
 	memset(m_rotated_figures, 0, sizeof(m_rotated_figures)); 
 	memset(m_data, 0, sizeof(m_data)); 
@@ -145,13 +145,13 @@ void figure_t::copy(const figure_t& figure)
 }
 
 
-bool figure_t::try_place_figure(const figure_t& figure, const coord_t point)
+bool figure_t::try_place_figure(const figure_t& figure, const coord3D_t point)
 {
-	coord_t size = figure.get_size();
+	coord3D_t size = figure.get_size();
 	
 	FOR_EACH_CUBE_ELEM(p1,size)	
 	{
-		coord_t p_plus_offs(p1);
+		coord3D_t p_plus_offs(p1);
 		p_plus_offs.add(point);
 		if (CUBE_ELEM(figure.m_data,p1) != 0 && CUBE_ELEM(m_data,p_plus_offs) != 0)
 			return false;
@@ -159,7 +159,7 @@ bool figure_t::try_place_figure(const figure_t& figure, const coord_t point)
 				
 	FOR_EACH_CUBE_ELEM(p,size)	
 	{
-		coord_t p_plus_offs(p);
+		coord3D_t p_plus_offs(p);
 		p_plus_offs.add(point);
 		CUBE_ELEM(m_data,p_plus_offs) += CUBE_ELEM(figure.m_data,p);
 	}
@@ -170,10 +170,10 @@ bool figure_t::try_place_figure(const figure_t& figure, const coord_t point)
 }
 
 
-bool figure_t::remove_figure(const figure_t& figure, const coord_t point)
+bool figure_t::remove_figure(const figure_t& figure, const coord3D_t point)
 {
-	coord_t size = figure.get_size();
-	coord_t zero_coord, max_coord(point);
+	coord3D_t size = figure.get_size();
+	coord3D_t zero_coord, max_coord(point);
 	max_coord.add(size);
 	
 	if(	point.any_coord_is_less(zero_coord) || m_size.any_coord_is_less(max_coord) )
@@ -181,7 +181,7 @@ bool figure_t::remove_figure(const figure_t& figure, const coord_t point)
 	
 	FOR_EACH_CUBE_ELEM(p,size)	
 	{
-		coord_t p_plus_offs(p);
+		coord3D_t p_plus_offs(p);
 		p_plus_offs.add(point);
 		CUBE_ELEM(m_data,p_plus_offs) -= CUBE_ELEM(figure.m_data,p);
 	}
@@ -198,7 +198,7 @@ void figure_t::sprint(char* s, const char* caption, const char* string_start) co
 		sprintf(s+strlen(s), "%s", string_start);
   sprintf(s+strlen(s), "%s\n", caption);
  
-	coord_t p;
+	coord3D_t p;
 	for(p.z=0; p.z<m_size.z; p.z++)
 		for(p.y=0; p.y<m_size.y; p.y++)
 		{
@@ -230,7 +230,7 @@ int figure_t::get_movable_subfigure_index(direction_t& out_direction) const
 	can_move_t* can_move = dnew can_move_t[m_filler+1];
 	memset(can_move, 1, sizeof(can_move_t) * m_filler);	// set all to true
 	
-	coord_t zero_coord;
+	coord3D_t zero_coord;
 
 	FOR_EACH_CUBE_ELEM(p,m_size)	
 	{
@@ -238,7 +238,7 @@ int figure_t::get_movable_subfigure_index(direction_t& out_direction) const
 		if(v > 0)
 			FOR_ALL_ENUM(direction)
 			{
-				coord_t c = direction2delta(direction); 
+				coord3D_t c = direction2delta_3D(direction); 
 				c.add(p);
 				
 				encountered[v] = true;
@@ -269,18 +269,18 @@ int figure_t::get_movable_subfigure_index(direction_t& out_direction) const
 	return 0;
 }
 
-bool figure_t::has_solid_line(const coord_t& start, axis_t axis) const
+bool figure_t::has_solid_line(const coord3D_t& start, axis_t axis) const
 {
-	coord_t d = direction2delta(axis2direction(axis, false));
+	coord3D_t d = direction2delta_3D(axis2direction(axis, false));
 	
-	for(	coord_t curr(start); curr.each_coord_is_less(m_size); curr.add(d) )
+	for(	coord3D_t curr(start); curr.each_coord_is_less(m_size); curr.add(d) )
 		if( CUBE_ELEM(m_data,curr) == 0)
 			return false;
 			
 	return true;
 }
 
-coord_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
+coord3D_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
 {
 	q = 0;
 	
@@ -292,7 +292,7 @@ coord_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
 	if(q==0)
 	  return 0;
 					
-	coord_t* vertices = dnew coord_t[q];
+	coord3D_t* vertices = dnew coord3D_t[q];
 			
 	int count = 0;
 	FOR_EACH_CUBE_ELEM(p,m_size)	
@@ -303,18 +303,18 @@ coord_t* figure_t::get_coords_of_subfigure(int& q, char filler) const
 	return vertices;
 }
 
-point_group_t* figure_t::get_coords_of_all_subfigures(int& size) const
+point_group3D_t* figure_t::get_coords_of_all_subfigures(int& size) const
 {
 	if(m_filler <= 0)
 		return 0;
 		
-	point_group_t* groups = dnew point_group_t[m_filler];
+	point_group3D_t* groups = dnew point_group3D_t[m_filler];
 	
 	size = 0;
 	for( int i=1; i<=m_filler; i++)
 	{
 		int quantity;
-		coord_t* coords = get_coords_of_subfigure(quantity, i);
+		coord3D_t* coords = get_coords_of_subfigure(quantity, i);
 		if(coords)
 		{
 			groups[size].coords		=	coords;
@@ -333,13 +333,13 @@ const figure_t& figure_t::rotate_around_axis(axis_t axis, angle_t angle) const
 		return *m_rotated_figures[axis][angle];
 
 	int q;
-	coord_t* coords = get_coords_of_subfigure(q);
+	coord3D_t* coords = get_coords_of_subfigure(q);
 	if(!coords)
 		return m_null_figure;
 		
 	::rotate_around_axis(coords, q, axis, angle);
 	
-	coord_t new_size = determine_size_and_adjust_coords_to_positive_values(coords, q);
+	coord3D_t new_size = determine_size_and_adjust_coords_to_positive_values(coords, q);
 	
 	m_rotated_figures[axis][angle] = dnew figure_t(m_filler, new_size, coords, q);
 	

@@ -5,7 +5,7 @@
 
 #define CUBE_ELEM(name, p)				(name)[(p).x][(p).y][(p).z]
 
-#define FOR_EACH_CUBE_ELEM(p,size)	coord_t p;																\
+#define FOR_EACH_CUBE_ELEM(p,size)	coord3D_t p;																\
 																		for((p).z=0; (p).z<(size).z; (p).z++)			\
 																			for((p).y=0; (p).y<(size).y; (p).y++)		\
 																				for((p).x=0; (p).x<(size).x; (p).x++)	

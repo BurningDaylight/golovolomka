@@ -13,9 +13,9 @@ void write_vertex(char* vs, float x, float y, float z)
 	sprintf(vs + strlen(vs), "v  %.1lf  %.1lf  %.1lf\n", x, y, z);
 }
 
-void write_coord(char* vs, const coord_t& coords)
+void write_coord(char* vs, const coord3D_t& coords)
 {
-	const coord_t c = coords;
+	const coord3D_t c = coords;
 	
 	const float DX = -size * 3;
 	const float DY = -size * 1;
@@ -39,7 +39,7 @@ void write_coord(char* vs, const coord_t& coords)
 void write_blocks_info_obj_file(
 																	char*						filename, 
 																	const char*			header, 
-																	const coord_t*	coords, 
+																	const coord3D_t*	coords, 
 																	int							num
 																)
 {
@@ -101,7 +101,7 @@ void write_blocks_info_obj_file(
 void write_group_of_blocks_info_obj_file(
 																					const char*						filename,
 																					const char*						header, 
-																					const point_group_t*	groups, 
+																					const point_group3D_t*	groups, 
 																					int										num
 																				)
 {
