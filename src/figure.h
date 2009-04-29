@@ -17,7 +17,7 @@ struct figure_t
 private:	
 	static const figure_t m_null_figure;
 	
-	coord3D_t		m_size;
+	coord3D_t	m_size;
 	char			m_filler;
 	
 	DEF_CUBE_3D( m_data, MAX_FIGURE_SIZE);
