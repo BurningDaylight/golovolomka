@@ -1,7 +1,8 @@
 #ifndef FIGURE_H_INCLUDED
 #define FIGURE_H_INCLUDED
 
-#include "typedef.h"
+#include "coord.h"
+#include "cube.h"
 
 const unsigned int MAX_FIGURE_SIZE = 6;
 

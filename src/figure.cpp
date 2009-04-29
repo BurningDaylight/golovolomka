@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+const char SOLID = '#';
+const char EMPTY = '.';
 
 #define USE_UNIFICATED_BLOCK_PRINT
 
@@ -60,8 +62,8 @@ void rotate_around_axis(coord_t* coords, int q, axis_t axis, angle_t angle)
 
 coord_t determine_size_and_adjust_coords_to_positive_values(coord_t* coords, int q)
 {
-	coord_t min_coords = COORD_INF_POS;
-	coord_t max_coords = COORD_INF_NEG;
+	coord_t min_coords = coord_t::get_inf_pos();
+	coord_t max_coords = coord_t::get_inf_neg();
 
 	for(int i = 0; i<q; i++)
 	{

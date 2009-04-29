@@ -176,6 +176,18 @@
 	</References>
 	<Files>
 		<File
+			RelativePath="..\..\src\coord.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\coord.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\cube.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\figure.cpp"
 			>
 		</File>
