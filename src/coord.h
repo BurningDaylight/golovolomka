@@ -23,6 +23,8 @@ public:
 };
 
 
+//----------------------------------- 2D ---------------------------------------
+
 struct coord2D_t : public coord_t
 {
 private:
@@ -52,6 +54,16 @@ public:
 	bool each_coord_is_greater_equal(const coord2D_t& rh) const {	return x>=rh.x && y>=rh.y; }
 };
 
+
+struct point_group2D_t {
+	int					quantity;
+	coord2D_t*	coords;
+
+	point_group2D_t() : quantity(0), coords(0) {}
+};
+
+
+//----------------------------------- 3D ---------------------------------------
 
 struct coord3D_t : public coord_t
 {
@@ -84,12 +96,14 @@ public:
 
 
 struct point_group3D_t {
-	int				quantity;
+	int					quantity;
 	coord3D_t*	coords;
 	
 	point_group3D_t() : quantity(0), coords(0) {}
 };
 
+
+//---------------------------- Axis and direction -------------------------------------
 
 enum axis_t
 {
@@ -119,5 +133,8 @@ axis_t direction2axis(const direction_t& direction, bool& inverted);
 
 coord2D_t direction2delta_2D(const direction_t& direction);
 coord3D_t direction2delta_3D(const direction_t& direction);
+
+
+
 
 #endif // COORD_H_INCLUDED
