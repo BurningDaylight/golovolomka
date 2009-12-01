@@ -19,17 +19,17 @@ private:
 	figure_packer_observer_t&			observer;
 
 	figure_placement_heuristics_t figure_placement_heuristics;
-	
+
 	figure_set_enumerator_t::strategy_t							set_enum_strategy;
 	figure_transformation_enumerator_t::strategy_t	transformation_enum_strategy;
-	
-	
-	figure_t&											field; 
+
+
+	figure_t&											field;
 	const figure_rotator_t*				figures;
 	const int											quantity_of_figures;
 
 	int														requested_index_of_decision;
-	
+
 	bool place_next_figure(
 								const int												quantity_of_placed,
 								const double										max_variants,
@@ -39,19 +39,19 @@ private:
 							);
 public:
 
-	figure_packer_t(	
-				figure_t&																				field, 
+	figure_packer_t(
+				figure_t&																				field,
 				const figure_rotator_t*													figures,
 				int																							quantity,
 				figure_packer_observer_t&												observer,
 				figure_set_enumerator_t::strategy_t							set_enum_strategy,
 				figure_transformation_enumerator_t::strategy_t	transformation_enum_strategy
 			);
-										
+
 	virtual ~figure_packer_t();
-	
-	bool place_all_figures(	
-													int num_of_figures_to_place, 
+
+	bool place_all_figures(
+													int num_of_figures_to_place,
 													int requested_index_of_decision = 1	);
 };
 

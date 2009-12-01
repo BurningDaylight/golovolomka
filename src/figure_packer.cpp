@@ -14,12 +14,12 @@
 #define ENUMERATE(value, type, enum)  (enum).start_enumeration();							\
 																			while(!(enum).enumeration_is_ended())		\
 																			{																				\
-																				type value = (enum).next();						
+																				type value = (enum).next();
 #define END_OF_ENUMERATION }
 
 
-figure_packer_t::figure_packer_t(	
-				figure_t&																				field_, 
+figure_packer_t::figure_packer_t(
+				figure_t&																				field_,
 				const figure_rotator_t*													figures_,
 				int																							quantity_,
 				figure_packer_observer_t&												observer_,
@@ -32,8 +32,8 @@ figure_packer_t::figure_packer_t(
 		transformation_enum_strategy(transformation_enum_strategy_)
 {
 }
-									
-									
+
+
 figure_packer_t::~figure_packer_t()
 {
 }
@@ -52,34 +52,34 @@ bool figure_packer_t::place_next_figure(
 		processed_variant_portion,
 		weight_of_current_iteration
 	);
-	
+
 	if(figure_set_enum.get_quantity_of_iterations() == 0)
 	{
 		observer.on_found_solution( max_variants,  processed_variant_portion);
 		return true;
 	}
-		
+
 	int processed_figures = 0;
 
 	//Open figure_set node
 	ENUMERATE(placed_figure_index, int, figure_set_enum)
 	{
 		ensure("placed_figure_index must be >= 0", placed_figure_index >= 0);
-		
+
 		figure_set_enumerator_t next_figure_set_enum(
-																figure_set_enum, 
+																figure_set_enum,
 																placed_figure_index,
 																set_enum_strategy
 															);
-		
+
 		//Open figure_transformation node
 		figure_transformation_enumerator_t transformation_enum(
-																											quantity_of_placed, 
+																											quantity_of_placed,
 																											figures[placed_figure_index],
 																											transformation_enum_strategy
 																										);
 		ENUMERATE(transformed_figure, transformed_figure_t, transformation_enum)
-		{	
+		{
 			//Run heuristics on figure placement
 			if(figure_placement_heuristics.can_place_figure(
 							transformed_figure.figure, transformed_figure.position))
@@ -90,70 +90,70 @@ bool figure_packer_t::place_next_figure(
 				{
 					figure_placement_heuristics.on_figure_placement(
 									transformed_figure.figure, transformed_figure.position);
-									
-					const double variants_per_figure = 
+
+					const double variants_per_figure =
 						transformation_enum.get_quantity_of_iterations();
-														
-					const double current_variants = 
+
+					const double current_variants =
 						figure_set_enum.get_quantity_of_iterations() * variants_per_figure;
 
 					const double next_max_variants = max_variants * current_variants;
-					
-					const double weight_of_next_iteration = 
+
+					const double weight_of_next_iteration =
 						weight_of_current_iteration / current_variants;
-					
-					double processed_variants = 
-						1.f * processed_figures * variants_per_figure 
+
+					double processed_variants =
+						1.f * processed_figures * variants_per_figure
 						+ transformation_enum.get_interation_number() - 1;
-					
+
 					if( place_next_figure(
 								quantity_of_placed + 1,
 								next_max_variants,
 								processed_variant_portion + processed_variants * weight_of_next_iteration,
 								weight_of_next_iteration,
 								next_figure_set_enum
-						))	
+						))
 					{
 						if(observer.get_current_index_of_decision() >= requested_index_of_decision)
 							return true;
 					}
-						
+
 					figure_placement_heuristics.on_figure_removal(
 									transformed_figure.figure, transformed_figure.position);
-									
+
 					field.remove_figure(transformed_figure.figure, transformed_figure.position);
 				}
 			}
 		} END_OF_ENUMERATION
 		processed_figures++;
 	} END_OF_ENUMERATION
-				
+
 	ensure(
 		"Invalid number of processed figures!",
 		processed_figures == figure_set_enum.get_quantity_of_iterations()
 	);
-	
+
 	return false;
 }
 
 
-bool figure_packer_t::place_all_figures(	
-																					int num_of_figures_to_place, 
+bool figure_packer_t::place_all_figures(
+																					int num_of_figures_to_place,
 																					int requested_index_of_decision_
 																				)
 {
 	observer.on_search_start();
-	
+
 	requested_index_of_decision	=	requested_index_of_decision_;
-	
+
 	figure_set_enumerator_t figure_set_enum(
-																						quantity_of_figures, 
+																						quantity_of_figures,
 																						num_of_figures_to_place,
 																						set_enum_strategy
 																					);
-	
+
 	bool result = place_next_figure(0, 1, 0, 1, figure_set_enum);
-	
+
 	observer.on_search_end();
 
 	return result;
