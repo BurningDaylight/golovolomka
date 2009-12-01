@@ -22,3 +22,11 @@
 .DS_Store
 .project
 .settings
+
+Doxyfile
+*.kdevelop
+*.kdevelop.filelist
+*.kdevelop.pcs
+*.kdevses
+tags
+
