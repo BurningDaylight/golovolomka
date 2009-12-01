@@ -29,4 +29,5 @@ Doxyfile
 *.kdevelop.pcs
 *.kdevses
 tags
+/bin/golovolomka
 
