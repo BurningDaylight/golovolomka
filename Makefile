@@ -28,9 +28,24 @@ OBJS =  \
   ./src/transformed_figure.cpp \
   ./src/typedef.cpp
 
+HEADERS =  \
+  ./src/coord.h \
+  ./src/cube.h \
+  ./src/figure.h \
+  ./src/figure_packer.h \
+  ./src/figure_packer_observer.h \
+  ./src/figure_placement_heuristics.h \
+  ./src/figure_rotator.h \
+  ./src/figure_serialization.h \
+  ./src/figure_set_enumerator.h \
+  ./src/figure_transformation_enumerator.h \
+  ./src/obj_writer.h \
+  ./src/transformed_figure.h \
+  ./src/typedef.h
+
 all: ./bin/golovolomka
 
-./bin/golovolomka: $(OBJS)
+./bin/golovolomka: $(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o ./bin/golovolomka
 
 clean:
