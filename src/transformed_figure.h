@@ -17,14 +17,14 @@ public:
 
 	direction_t		direction;
 	angle_t				angle;
-	coord3D_t				position;
+	BASIC_COORD		position;
 	
 	transformed_figure_t() : 
 		figure(figure_t::get_null_figure()), direction(direction_numof)
 	{}
 	
 	transformed_figure_t(
-		const figure_t& figure_, direction_t direction_, angle_t angle_, coord3D_t position_) :
+		const figure_t& figure_, direction_t direction_, angle_t angle_, BASIC_COORD position_) :
 		figure(figure_), direction(direction_), angle(angle_), position(position_)
 	{}
 

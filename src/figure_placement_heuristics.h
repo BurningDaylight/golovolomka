@@ -17,9 +17,9 @@ public:
 
 	figure_placement_heuristics_t(const figure_t&	field);
 
-	bool can_place_figure(const figure_t& figure, const coord3D_t coords) const;
-	void on_figure_placement(const figure_t& figure, const coord3D_t coords);
-	void on_figure_removal(const figure_t& figure, const coord3D_t coords);
+	bool can_place_figure(const figure_t& figure, const BASIC_COORD coords) const;
+	void on_figure_placement(const figure_t& figure, const BASIC_COORD coords);
+	void on_figure_removal(const figure_t& figure, const BASIC_COORD coords);
 };
 
 
