@@ -13,7 +13,7 @@ void write_vertex(char* vs, float x, float y, float z)
 	sprintf(vs + strlen(vs), "v  %.1lf  %.1lf  %.1lf\n", x, y, z);
 }
 
-void write_coord(char* vs, const coord3D_t& coords)
+void write_coord3D(char* vs, const coord3D_t& coords)
 {
 	const coord3D_t c = coords;
 	
@@ -61,7 +61,7 @@ void write_blocks_info_obj_file(
 	
 	char vertices[BIG_BUFFER] = "";
 	for(int i=0; i<num; i++)
-		write_coord(vertices, coords[i]);
+		write_coord3D(vertices, coords[i]);
 	fprintf(fp, "%s", vertices);
 	
 	//write normals
@@ -137,7 +137,7 @@ void write_group_of_blocks_info_obj_file(
 		
 		char vertices[BIG_BUFFER] = "";
 		for(int i=0; i<groups[g].quantity; i++) 
-			write_coord(vertices, groups[g].coords[i]);
+			write_coord3D(vertices, groups[g].coords[i]);
 		fprintf(fp, "%s", vertices);
 		
 		//write faces
