@@ -11,7 +11,11 @@ const unsigned int MAX_FIGURE_SIZE = 6;
 // TODO:	Generalize it!
 //				We need figures of any dimension in order to implement projections!
 
-#define BASIC_COORD coord3D_t
+// Note: Settings for 3D solving only!
+#define BASIC_COORD								coord3D_t
+#define BASIC_CUBE_ELEM						CUBE_3D_ELEM
+#define DEF_BASIC_CUBE						DEF_CUBE_3D
+#define FOR_EACH_BASIC_CUBE_ELEM	FOR_EACH_CUBE_3D_ELEM
 
 
 struct figure_t 
