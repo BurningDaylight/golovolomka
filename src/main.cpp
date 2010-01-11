@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 	ENABLE_MEMORY_LEAK_CONTROL
 
 	printf("---------------------------------------------------------\n");
-	printf("     GOLOVOLOMKA SOLVER. (C) Dmitry Potapov, 2009.			 \n");
+	printf("     GOLOVOLOMKA SOLVER. (C) Dmitry Potapov, 2009-2010.  \n");
 	printf("---------------------------------------------------------\n");
 	
 	FOR_ALL_FIGURES(QUANTITY_OF_ORIGINAL_FIGURES, i) 
