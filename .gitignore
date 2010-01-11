@@ -8,6 +8,7 @@
 *.ncb
 *.user
 
+/doc/html
 /project/win32/Debug
 /project/win32/Release
 /project/win32/VTune
