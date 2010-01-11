@@ -10,7 +10,7 @@ struct transformed_figure_t;
 struct figure_rotator_t;
 
 
-
+//Generalize, make factory for transformation operators to use not only 3D coords
 struct figure_transformation_enumerator_t
 {
 
@@ -27,7 +27,7 @@ public:
 	{
 		direction_t direction;
 		angle_t			angle;
-		coord3D_t			position;
+		coord3D_t		position;
 		figure_transformation_operator_t(	direction_t direction_, angle_t angle_, coord3D_t position_) :
 			direction(direction_),	angle(angle_), position(position_)
 		{}
