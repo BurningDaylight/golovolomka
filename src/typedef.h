@@ -23,14 +23,14 @@ const unsigned int BIG_BUFFER = 100000;
 	#else
 		#define dnew new
 	#endif
-	
+
 	#define ENABLE_MEMORY_LEAK_CONTROL										\
 		int dbgflag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);	\
 		dbgflag |= _CRTDBG_LEAK_CHECK_DF;										\
 		_CrtSetDbgFlag(dbgflag);
-		
+
 	#define WAIT_KEY_PRESSED _getch();
-	
+
 #else
 
 	#define dnew new
@@ -58,11 +58,11 @@ enum angle_t
 {
 	angle_none,
 	angle_first = angle_none,
-	
+
 	angle_90,
 	angle_180,
 	angle_270,
-	
+
 	angle_numof
 };
 
