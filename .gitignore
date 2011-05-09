@@ -33,3 +33,6 @@ Doxyfile
 tags
 /bin/golovolomka
 
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
