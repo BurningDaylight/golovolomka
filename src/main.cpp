@@ -195,8 +195,8 @@ int main(int argc, char* argv[])
 		printf("Resulting field has been saved.\n");
 	#endif
 
-	
-	printf("<Press any key to quit>");
+
+	printf("<Press 'Enter' key to quit>");
 	WAIT_KEY_PRESSED
 	return 0;
 }

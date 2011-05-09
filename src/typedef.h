@@ -35,12 +35,12 @@ const unsigned int BIG_BUFFER = 100000;
 
 	#define dnew new
 	#define ENABLE_MEMORY_LEAK_CONTROL
-	
-	#define WAIT_KEY_PRESSED
-	
-#endif											
 
- 
+	#define WAIT_KEY_PRESSED getchar();
+
+#endif
+
+
 #define error(M) { printf("Error: %s", (M)); throw 0; }
 
 #ifdef _DEBUG
