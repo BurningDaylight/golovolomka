@@ -175,7 +175,7 @@ int main(int argc, char* argv[])
 	{
 		char figure_as_text[BIG_BUFFER] = "";
 		original_figures[i].get(direction_x, angle_none).sprint(figure_as_text, "", "");
-		printf(figure_as_text);
+		printf("%s", figure_as_text);
 	}
 	printf("---------------------------------------------------------\n");
 
