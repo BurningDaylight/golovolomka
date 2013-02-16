@@ -11,9 +11,9 @@ const char EMPTY = '.';
 
 void rotate2D_hacked(coord_value_t& x, coord_value_t& y, coord_value_t cos_a, coord_value_t sin_a )
 {
-	coord_value_t x1 = x + 1;
-	coord_value_t y1 = y + 1;
-	
+	coord_value_t x1 = x;
+	coord_value_t y1 = y;
+
 	x = x1 * cos_a - y1 * sin_a;
 	y = x1 * sin_a + y1 * cos_a;
 }
