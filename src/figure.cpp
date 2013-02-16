@@ -65,14 +65,21 @@ BASIC_COORD determine_size_and_adjust_coords_to_positive_values(BASIC_COORD* coo
 	BASIC_COORD min_coords = BASIC_COORD::get_inf_pos();
 	BASIC_COORD max_coords = BASIC_COORD::get_inf_neg();
 
+  //printf("determine start: %d %d %d, %d %d %d\n", min_coords.x, min_coords.y, min_coords.z, max_coords.x, max_coords.y, max_coords.z);
+
 	for(int i = 0; i<q; i++)
 	{
+    //printf("%d, coord: %d %d %d\n", i, coords[i].x, coords[i].y, coords[i].z);
 		min_coords.set_min(coords[i]);
 		max_coords.set_max(coords[i]);
 	}
 
+	//printf("determine end: %d %d %d, %d %d %d\n", min_coords.x, min_coords.y, min_coords.z, max_coords.x, max_coords.y, max_coords.z);
+
 	for(int i = 0; i<q; i++)
+  {
 		coords[i].sub(min_coords);
+  }
 
 	max_coords.sub(min_coords);
 	max_coords.add_scalar(1);
@@ -292,6 +299,8 @@ BASIC_COORD* figure_t::get_coords_of_subfigure(int& q, char filler) const
 	if(q==0)
 	  return 0;
 
+  //printf("q=%d\n", q);
+
 	BASIC_COORD* vertices = dnew BASIC_COORD[q];
 
 	int count = 0;
@@ -342,6 +351,7 @@ const figure_t& figure_t::rotate_around_axis(axis_t axis, angle_t angle) const
 	BASIC_COORD new_size = determine_size_and_adjust_coords_to_positive_values(coords, q);
 
 	m_rotated_figures[axis][angle] = dnew figure_t(m_filler, new_size, coords, q);
+  //printf("new size: %d, %d, %d, %d %d %d\n", q, (int)axis, (int)angle, new_size.x, new_size.y, new_size.z);
 
 	delete[] coords;
 
