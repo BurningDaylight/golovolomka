@@ -49,5 +49,5 @@ all: ./bin/golovolomka
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o ./bin/golovolomka
 
 clean:
-	rm -f *.o *~ -o ./bin/golovolomka
+	rm -f *.o *~ ./bin/golovolomka
 
