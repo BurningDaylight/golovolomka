@@ -33,20 +33,10 @@ const figure_transformation_enumerator_t::strategy_t
 
 #define USE_SORTED_ORDER_OF_FIGURES
 
-//#define USE_DUMMY_FIGURES
-
-
 const unsigned int FIELD_X = 6;
 const unsigned int FIELD_Y = 6;
 const unsigned int FIELD_Z = 6;
 
-
-#define DEFINE_FIGURE(number, s) figure_rotator_t figure_##number( \
-																		figure_t((number), coord3D_t(6, 2, 2), (s)));
-
-//--------------------------- initial figures ---------------------------------
-
-const unsigned int QUANTITY_OF_ORIGINAL_FIGURES = 6;
 
 #define BURNING_DAYLIGHT_1  1
 #define GRIGORUSHA_1        2
@@ -54,141 +44,172 @@ const unsigned int QUANTITY_OF_ORIGINAL_FIGURES = 6;
 
 #define PUZZLE_TYPE BURNING_DAYLIGHT_1
 
-#if PUZZLE_TYPE == BURNING_DAYLIGHT_1
 
-DEFINE_FIGURE(1,
-								"######"
-								"######"
-												//"######"
-												//"######")
-												"#.##.#"
-												"#....#")
-DEFINE_FIGURE(2,
-								"######"
-								"##..##"
-												//"######"
-												//"######")
-												"#..#.#"
-												"#....#")
-DEFINE_FIGURE(3,
-								"######"
-								"######"
-												"#...##"
-												"#...##")
-DEFINE_FIGURE(4,
-								"######"
-								"######"
-												"#....#"
-												"#....#")
-DEFINE_FIGURE(5,
-								"######"
-								"##.###"
-												"#....#"
-												"#....#")
-DEFINE_FIGURE(6,
-								"######"
-								"##..##"
-												"##..##"
-												"#....#")
-
-#elif PUZZLE_TYPE == GRIGORUSHA_1
-
-// First puzzle from http://grigr.narod.ru/another/treepuzzle.htm
-
-DEFINE_FIGURE(1,
-                "######"
-                "###~##"
-                        "#~#~~#"
-                        "#~~~~#")
-DEFINE_FIGURE(2,
-                "######"
-                "###~~#"
-                        "##~###"
-                        "##~~##")
-DEFINE_FIGURE(3,
-                "######"
-                "#~#~~#"
-                        "##~~##"
-                        "#~~~##")
-DEFINE_FIGURE(4,
-                "######"
-                "#~~#~#"
-                        "##~~##"
-                        "##~~##")
-DEFINE_FIGURE(5,
-                "######"
-                "###~##"
-                        "#~~~~#"
-                        "#~~~~#")
-DEFINE_FIGURE(6,
-                "##~~##"
-                "######"
-                        "##~~##"
-                        "#~~~~#")
-
-#elif PUZZLE_TYPE == GRIGORUSHA_2
-
-// Second puzzle from http://grigr.narod.ru/another/treepuzzle.htm
-DEFINE_FIGURE(1,
-                "######"
-                "###~##"
-                        "#~~~~#"
-                        "#~#~~#")
-DEFINE_FIGURE(2,
-                "##~~##"
-                "######"
-                        "##~~##"
-                        "#~~~~#")
-DEFINE_FIGURE(3,
-                "######"
-                "##~###"
-                        "##~###"
-                        "#~~~##")
-DEFINE_FIGURE(4,
-                "######"
-                "##~~##"
-                        "#~~#~#"
-                        "#~~~~#")
-DEFINE_FIGURE(5,
-                "######"
-                "#~~~~#"
-                        "##~~##"
-                        "###~##")
-DEFINE_FIGURE(6,
-                "######"
-                "###~##"
-                        "#~~~~#"
-                        "#~~~~#")
-
-#endif
+const unsigned int QUANTITY_OF_ORIGINAL_FIGURES = 6;
 
 
-figure_rotator_t original_figures[QUANTITY_OF_ORIGINAL_FIGURES] =
+//-----------------------------------------------------------------------------
+
+
+#define DEFINE_FIGURE(number, s) figure_t figure_##number((number), coord3D_t(6, 2, 2), (s));
+
+
+//--------------------------- initial figures ---------------------------------
+
+
+figure_rotator_t* init_figures(int& q, const bool use_dummy_figures = false)
 {
-#ifdef USE_SORTED_ORDER_OF_FIGURES
-	figure_1,
-	figure_2,
-	figure_3,
-	figure_4,
-	figure_5,
-	figure_6,
-#else
-	figure_6,
-	figure_5,
-	figure_4,
-	figure_3,
-	figure_2,
-	figure_1,
-#endif
-};
+  if (use_dummy_figures)
+  {
+    const unsigned int QUANTITY_OF_DUMMY_FIGURES = 2;
+    figure_rotator_t* dummy_figures = dnew figure_rotator_t[QUANTITY_OF_DUMMY_FIGURES];
+
+    dummy_figures[0].init(figure_t( 1, coord3D_t(1, 1, 1), "#"));
+    dummy_figures[1].init(figure_t( 2, coord3D_t(1, 1, 1), "#"));
+
+    q = QUANTITY_OF_DUMMY_FIGURES;
+    return dummy_figures;
+  }
+
+  #if PUZZLE_TYPE == BURNING_DAYLIGHT_1
+
+  DEFINE_FIGURE(1,
+                  "######"
+                  "######"
+                          //"######"
+                          //"######")
+                          "#.##.#"
+                          "#....#")
+
+  DEFINE_FIGURE(2,
+                  "######"
+                  "##..##"
+                          //"######"
+                          //"######")
+                          "#..#.#"
+                          "#....#")
+  DEFINE_FIGURE(3,
+                  "######"
+                  "######"
+                          "#...##"
+                          "#...##")
+  DEFINE_FIGURE(4,
+                  "######"
+                  "######"
+                          "#....#"
+                          "#....#")
+  DEFINE_FIGURE(5,
+                  "######"
+                  "##.###"
+                          "#....#"
+                          "#....#")
+  DEFINE_FIGURE(6,
+                  "######"
+                  "##..##"
+                          "##..##"
+                          "#....#")
+
+  #elif PUZZLE_TYPE == GRIGORUSHA_1
+
+  // First puzzle from http://grigr.narod.ru/another/treepuzzle.htm
+
+  DEFINE_FIGURE(1,
+                  "######"
+                  "###~##"
+                          "#~#~~#"
+                          "#~~~~#")
+  DEFINE_FIGURE(2,
+                  "######"
+                  "###~~#"
+                          "##~###"
+                          "##~~##")
+  DEFINE_FIGURE(3,
+                  "######"
+                  "#~#~~#"
+                          "##~~##"
+                          "#~~~##")
+  DEFINE_FIGURE(4,
+                  "######"
+                  "#~~#~#"
+                          "##~~##"
+                          "##~~##")
+  DEFINE_FIGURE(5,
+                  "######"
+                  "###~##"
+                          "#~~~~#"
+                          "#~~~~#")
+  DEFINE_FIGURE(6,
+                  "##~~##"
+                  "######"
+                          "##~~##"
+                          "#~~~~#")
+
+  #elif PUZZLE_TYPE == GRIGORUSHA_2
+
+  // Second puzzle from http://grigr.narod.ru/another/treepuzzle.htm
+  DEFINE_FIGURE(1,
+                  "######"
+                  "###~##"
+                          "#~~~~#"
+                          "#~#~~#")
+  DEFINE_FIGURE(2,
+                  "##~~##"
+                  "######"
+                          "##~~##"
+                          "#~~~~#")
+  DEFINE_FIGURE(3,
+                  "######"
+                  "##~###"
+                          "##~###"
+                          "#~~~##")
+  DEFINE_FIGURE(4,
+                  "######"
+                  "##~~##"
+                          "#~~#~#"
+                          "#~~~~#")
+  DEFINE_FIGURE(5,
+                  "######"
+                  "#~~~~#"
+                          "##~~##"
+                          "###~##")
+  DEFINE_FIGURE(6,
+                  "######"
+                  "###~##"
+                          "#~~~~#"
+                          "#~~~~#")
+
+  #endif
 
 
-const unsigned int QUANTITY_OF_DUMMY_FIGURES = 2;
-figure_rotator_t dummy_figures[QUANTITY_OF_DUMMY_FIGURES] =
+  figure_rotator_t* figures = dnew figure_rotator_t[QUANTITY_OF_ORIGINAL_FIGURES];
+
+  #ifdef USE_SORTED_ORDER_OF_FIGURES
+    figures[0].init(figure_1);
+    figures[1].init(figure_2);
+    figures[2].init(figure_3);
+    figures[3].init(figure_4);
+    figures[4].init(figure_5);
+    figures[5].init(figure_6);
+  #else
+    figures[0].init(figure_6);
+    figures[1].init(figure_5);
+    figures[2].init(figure_4);
+    figures[3].init(figure_3);
+    figures[4].init(figure_2);
+    figures[5].init(figure_1);
+  #endif
+
+
+  q = QUANTITY_OF_ORIGINAL_FIGURES;
+  return figures;
+}
+
+
+void delete_figures(figure_rotator_t* figures)
 {
-	figure_rotator_t(figure_t( 1, coord3D_t(1, 1, 1), "#")),
-	figure_rotator_t(figure_t( 2, coord3D_t(1, 1, 1), "#")),
-};
+  delete[] figures;
+}
+
 
 //------------------------------------------------------------
 //												MAIN
@@ -202,21 +223,16 @@ int main(int argc, char* argv[])
 	printf("     GOLOVOLOMKA SOLVER. (C) Dmitry Potapov, 2009-2010.  \n");
 	printf("---------------------------------------------------------\n");
 
-	FOR_ALL_FIGURES(QUANTITY_OF_ORIGINAL_FIGURES, i)
+  int q = 0;
+  figure_rotator_t* figures = init_figures(q, false);
+
+	FOR_ALL_FIGURES(q, i)
 	{
 		char figure_as_text[BIG_BUFFER] = "";
-		original_figures[i].get(direction_x, angle_none).sprint(figure_as_text, "", "");
+		figures[i].get(direction_x, angle_none).sprint(figure_as_text, "", "");
 		printf("%s", figure_as_text);
 	}
 	printf("---------------------------------------------------------\n");
-
-	#ifndef USE_DUMMY_FIGURES
-		figure_rotator_t* figures = original_figures;
-		const int q = QUANTITY_OF_ORIGINAL_FIGURES;
-	#else
-		figure_rotator_t* figures = dummy_figures;
-		const int q = QUANTITY_OF_DUMMY_FIGURES;
-	#endif
 
 	printf("Solving puzzle...\n");
 
@@ -263,6 +279,9 @@ int main(int argc, char* argv[])
 				index_of_decision,
 				figure_packer_observer.get_current_index_of_decision()
 			);
+
+      delete_figures(figures);
+
 			printf("<Press any key to quit>");
 			WAIT_KEY_PRESSED
 			return 0;
@@ -275,6 +294,7 @@ int main(int argc, char* argv[])
 		printf("Resulting field has been saved.\n");
 	#endif
 
+  delete_figures(figures);
 
 	printf("<Press 'Enter' key to quit>");
 	WAIT_KEY_PRESSED
