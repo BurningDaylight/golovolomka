@@ -220,7 +220,7 @@ int main(int argc, char* argv[])
 	ENABLE_MEMORY_LEAK_CONTROL
 
 	printf("---------------------------------------------------------\n");
-	printf("     GOLOVOLOMKA SOLVER. (C) Dmitry Potapov, 2009-2010.  \n");
+	printf("     GOLOVOLOMKA SOLVER. (C) Dmitry Potapov, 2009-2013.  \n");
 	printf("---------------------------------------------------------\n");
 
   int q = 0;
