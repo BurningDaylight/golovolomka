@@ -6,11 +6,14 @@
 struct figure_rotator_t
 {
 private:
+  figure_t m_source_figure;
+
 	figure_t m_figure_positions[direction_numof][angle_numof];
 
 public:
-	figure_rotator_t() {}
-	figure_rotator_t(const figure_t& figure);
+	figure_rotator_t() {};
+
+	void init(const figure_t& figure);
 
 	const figure_t& get(const direction_t direction, const angle_t angle) const
 	{
