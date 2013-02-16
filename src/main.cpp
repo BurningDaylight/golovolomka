@@ -128,7 +128,37 @@ DEFINE_FIGURE(6,
 
 #elif PUZZLE_TYPE == GRIGORUSHA_2
 
-    #error "GRIGR_3 not defined"
+// Second puzzle from http://grigr.narod.ru/another/treepuzzle.htm
+DEFINE_FIGURE(1,
+                "######"
+                "###~##"
+                        "#~~~~#"
+                        "#~#~~#")
+DEFINE_FIGURE(2,
+                "##~~##"
+                "######"
+                        "##~~##"
+                        "#~~~~#")
+DEFINE_FIGURE(3,
+                "######"
+                "##~###"
+                        "##~###"
+                        "#~~~##")
+DEFINE_FIGURE(4,
+                "######"
+                "##~~##"
+                        "#~~#~#"
+                        "#~~~~#")
+DEFINE_FIGURE(5,
+                "######"
+                "#~~~~#"
+                        "##~~##"
+                        "###~##")
+DEFINE_FIGURE(6,
+                "######"
+                "###~##"
+                        "#~~~~#"
+                        "#~~~~#")
 
 #endif
 
